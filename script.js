@@ -26,18 +26,18 @@ $("#form").submit(function(event){
 
 function displayList() {
     let list = $("#ul-list");
-    //list.empty();               // LÄGG TILL FUNKTION
+    list.empty();              
 
     for (let i = 0; i< activities.length; i++){
-        list.append (`<li> ${activities[i].activity} <span onmouseover="style ='cursor: pointer'">X</span></li><br>`)
+        list.append (`<li> ${activities[i].activity} <span onmouseover="style ='cursor: pointer'">[x]</span></li><br>`)
     }
 
-    deleteItem();               
-    //updateItem();               //LÄGG TILL FUNKTION
+    deleteEvent();               
+    updateEvent();
     //onItemHover();              //LÄGG TILL FUNKTION
 }
 
-function deleteItem() {
+function deleteEvent() {
     let allItems = $("span");
 
     for (let i = 0; i < allItems.length; i++) {
@@ -49,4 +49,17 @@ function deleteItem() {
     }
 }
 
+function updateEvent(){
+    let allEvents = $("li");
+
+    for (let i = 0; i < allEvents; i++){
+        $(allEvents[i]).click( function (){
+             allEvents[i].strike();
+        });
+    }
+
+    }
+
+populateList();
 displayList();
+updateEvent();
