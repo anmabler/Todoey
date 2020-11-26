@@ -8,6 +8,7 @@ function populateList(){
     let activity2 = {
         activity: "Justera glasögon"
     }
+   
 
     activities.push(activity);
     activities.push(activity2);
@@ -52,9 +53,9 @@ function deleteEvent() {
 function updateEvent(){
     let allEvents = $("li");
 
-    for (let i = 0; i < allEvents; i++){
+    for (let i = 0; i < allEvents.length; i++){
         $(allEvents[i]).click( function (){
-             allEvents[i].strike();
+             $(allEvents[i]).strike();
         });
     }
 
