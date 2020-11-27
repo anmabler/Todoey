@@ -2,11 +2,13 @@ let activities = [];
 
 function populateList(){
     let activity = {
-        activity: "Hämta test"
+        activity: "Hämta test",
+        checked: ""
     }
 
     let activity2 = {
-        activity: "Justera glasögon"
+        activity: "Justera glasögon",   
+        checked: ""
     }
    
 
@@ -18,31 +20,37 @@ $("#form").submit(function(event){
     event.preventDefault();
     let userInput = $("#user-input").val();
 
-    let eventToAdd = { activity: userInput }
-
-    activities.push(eventToAdd);
+    if (userInput.length > 0){
+        let eventToAdd = { activity: userInput, checked:"" }
+    
+        activities.push(eventToAdd);
+    } else {
+        alert("Du måste skriva in något.");
+    }
+    
     $("#user-input").val("");
-    displayList();
+    showList();
 })
 
-function displayList() {
+function showList() {
     let list = $("#ul-list");
     list.empty();              
 
     for (let i = 0; i< activities.length; i++){
-        list.append (`<li> ${activities[i].activity} <span onmouseover="style ='cursor: pointer'">[x]</span></li><br>`)
-    }
+        list.append (`<li>  ${activities[i].activity} <span onmouseover="style ='cursor: pointer'">[x]</span></li><br>`)
 
+    }
+    
     deleteEvent();               
     updateEvent();
-    //onItemHover();              //LÄGG TILL FUNKTION
+    onHover();
 }
 
 function deleteEvent() {
-    let allItems = $("span");
+    let allEvents = $("span");
 
-    for (let i = 0; i < allItems.length; i++) {
-        $(allItems[i]).click( function () {
+    for (let i = 0; i < allEvents.length; i++) {
+        $(allEvents[i]).click( function () {
             let parentElement = this.parentElement;
             parentElement.style.display = "none";
             activities.splice(i, 1);
@@ -55,12 +63,28 @@ function updateEvent(){
 
     for (let i = 0; i < allEvents.length; i++){
         $(allEvents[i]).click( function (){
-             $(allEvents[i]).strike();
+             $(allEvents[i]).toggleClass("checked");
+
+             if (activities[i].checked === ""){
+                 activities[i].checked ="checked";
+             }
+             else if (activities.checked ==="checked") {
+                 activities[i].checked ="";
+             }
         });
     }
 
-    }
+}
+
+function onHover(){
+    $("li").mouseenter(function () {
+        $(this).css("background-color", "grey");
+    })
+
+    $("li").mouseleave(function () {
+        $(this).css("background-color", "white");
+    })
+}
 
 populateList();
-displayList();
-updateEvent();
+showList();
